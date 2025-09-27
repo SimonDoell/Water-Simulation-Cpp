@@ -197,22 +197,12 @@ class Particle {
             const float maxSpeed = 3.0f; // adjust this to your max expected speed
 
             for (size_t i = 0; i < newVelocity.size(); ++i) {
-                // Calculate velocity vector difference (not needed here, since we're coloring by newVelocity)
                 sf::Vector2f v = newVelocity[i];
-
-                // Compute speed (magnitude of velocity)
                 float speed = std::sqrt(v.x * v.x + v.y * v.y);
-
-                // Normalize speed to [0, 1]
                 float normalized = std::min(speed / maxSpeed, 1.0f);
-
-                // Convert to blue intensity in [100, 255]
-                int blue = static_cast<int>(normalized * 155 + 100); // range [100–255]
-
-                // Optional: Clamp to valid color values
+                int blue = static_cast<int>(normalized * 155 + 100);
                 blue = std::min(255, std::max(0, blue));
 
-                // Set color: pure blue scaled by speed, with alpha 255
                 obj.setFillColor(sf::Color(0, 0, blue, 255));
             }
         }
