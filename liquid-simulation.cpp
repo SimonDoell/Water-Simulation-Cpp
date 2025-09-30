@@ -11,7 +11,7 @@ const float DRAG = 0.99f;
 const float BOUNCE_ENERGY_ABSORB = 0.6f;
 const int GRID_SIZE = 50;
 const int GRID_RADIUS = 5;
-//--> 5 for great Quality; 3 for faster
+//--> 5 for great Quality; 3 for faster, 3 will cause Artifacts of the grid optimization
 float forceCutoffRange = 125.0;
 float wallForceCutoff = 100.0f;
 float highestForcetemp = 0.0f;
