@@ -17,7 +17,6 @@ float wallForceCutoff = 100.0f;
 float highestForcetemp = 0.0f;
 
 
-sf::Vector2f GRAVITY(0, 0.15);
 int MAX_FRAMES = 60;
 
 
@@ -38,11 +37,6 @@ float forceEquation(float distance) {
 
 float wallForceEquation(float distance) {
     float force = float(pow((abs(distance)+1), -2));
-    //std::cout << "Force: " << force << "\n";
-    //if (force > highestForcetemp) {
-    //    highestForcetemp = force;
-    //    std::cout << "New high: " << highestForcetemp << " ,with distance: " << distance << "\n";
-    //}
     if (force > 0.1f) {
         return float(0.1f);
     } else {return force;}
@@ -71,29 +65,26 @@ class Particle {
             std::vector<sf::Vector2i> squareVectorMapCoords = {};
             int iterationCount = GRID_RADIUS*2+1;
 
-            //std::cout << "Starting Loop..." << "\n";
+            
 
             for (int i = 0; i < iterationCount; ++i) {
                 for (int ii = 0; ii < iterationCount; ++ii) {
                     int vectorX = ownGridVector.x + (i - GRID_RADIUS);
                     int vectorY = ownGridVector.y + (ii - GRID_RADIUS);
                     if (vectorX >= 0 && vectorX <= gridMap.size()-1 && vectorY >= 0 && vectorY <= gridMap[0].size()-1) {
-                        //std::cout << "Emplaced: (" << vectorX << " | " << vectorY << "), with gridMap Size: (" << gridMap.size() << " | " << gridMap[0].size() << ")\n";
+                        
                         squareVectorMapCoords.emplace_back(sf::Vector2i(vectorX, vectorY));
                     }
                     
                 }
             }
 
-            //std::cout << "Staring Loop 2...\n";
+            
             for (int i = 0; i < squareVectorMapCoords.size(); ++i) {
-                //std::cout << "Done I: " << i << "\n";
-
-
 
                 for (int ii = 0; ii < gridMap[squareVectorMapCoords[i].x][squareVectorMapCoords[i].y].size(); ++ii) {
 
-                    //std::cout << "Doing II: " << ii << ", with Coords: (" << squareVectorMapCoords[i].x << " | " << squareVectorMapCoords[i].y << ")" << "...\n";
+                    
                     int index = gridMap[squareVectorMapCoords[i].x][squareVectorMapCoords[i].y][ii];
                     if (index < 0 || index >= particles.size()) {
                         continue;
@@ -128,18 +119,11 @@ class Particle {
                         
                     }
 
-
-                    
-
-                   
-                    
-                    //particles[index].setFillColor(sf::Color::Red);
                 }
             }
-            //obj.setFillColor(sf::Color::Green);
+            
 
             velocity *= DRAG;
-            //velocity += GRAVITY;
             newVelocity.emplace_back(velocity);
         }
 
@@ -194,7 +178,7 @@ class Particle {
             const std::vector<sf::Vector2f>& newVelocity
         ) {
             const float minSpeed = 0.0f;
-            const float maxSpeed = 3.0f; // adjust this to your max expected speed
+            const float maxSpeed = 3.0f;
 
             for (size_t i = 0; i < newVelocity.size(); ++i) {
                 sf::Vector2f v = newVelocity[i];
@@ -211,7 +195,6 @@ class Particle {
         sf::Vector2f getGridVector() {
             float grid_x = int(pos.x / GRID_SIZE);
             float grid_y = int(pos.y / GRID_SIZE);
-            //std::cout << "GridVector: (" << grid_x << " | " << grid_y << ")\n";
             return sf::Vector2f(grid_x, grid_y);
         }
 };
@@ -219,7 +202,7 @@ class Particle {
 
 int main() {
     //Main Windows settings
-    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "WindowTitle", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Liquid Simulaiton", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(MAX_FRAMES);
     sf::Event ev;
     sf::ContextSettings settings;
